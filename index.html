@@ -1,11 +1,34 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Firebase Google Auth Mini</title>
+    <script>
+      // Инициализация темы максимально рано (до рендера)
+      (function () {
+        try {
+          const root = document.documentElement;
+          const defaultColorTheme = root.className;
+          const themeStorageValue = localStorage.getItem('theme');
+
+          if (
+            themeStorageValue &&
+            (themeStorageValue === 'dark' || themeStorageValue === 'light')
+          ) {
+            root.className = themeStorageValue;
+          } else {
+            localStorage.setItem('theme', 'dark');
+          }
+
+          if (navigator.userAgent.toLowerCase().includes('firefox')) {
+            root.dataset.browser = 'firefox';
+          }
+        } catch (e) {}
+      })();
+    </script>
   </head>
-  <body style="margin:0">
+  <body style="margin: 0">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

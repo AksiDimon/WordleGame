@@ -10,8 +10,8 @@ import App from './App';
 import LandingPage from './routes/LandingPage';
 import GamePage from './routes/GamePage';
 import ProfilePage from './routes/ProfilePage';
-import PlayersPage from "./routes/PlayersPage";
-import PlayerStatsPage from "./routes/PlayerStatsPage";
+import PlayersPage from './routes/PlayersPage';
+import PlayerStatsPage from './routes/PlayerStatsPage';
 import NotFoundPage from './routes/NotFoundPage';
 import { AuthProvider } from './features/auth/AuthProvider';
 import { RequireAuth } from './features/auth/RequireAuth';
@@ -49,8 +49,22 @@ const router = createBrowserRouter([
           </RequireAuth>
         ),
       },
-      { path: "players", element: <PlayersPage /> },           // список
-      { path: "players/:uid", element: <PlayerStatsPage /> },
+      {
+        path: 'players',
+        element: (
+          <RequireAuth>
+            <PlayersPage />
+          </RequireAuth>
+        ),
+      }, // список
+      {
+        path: 'players/:uid',
+        element: (
+          <RequireAuth>
+            <PlayerStatsPage />
+          </RequireAuth>
+        ),
+      },
       { path: '*', element: <NotFoundPage /> },
     ],
   },

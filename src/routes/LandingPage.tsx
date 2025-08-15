@@ -13,7 +13,7 @@ export default function LandingPage() {
 
       <p>Сыграй сегодняшнюю игру или войди в аккаунт:</p>
       <div className="flex gap-4 flex-wrap">
-        <Link to={`/game/${today}`} className="underline">Играть сегодня</Link>
+        {/* <Link to={`/game/${today}`} className="underline">Играть сегодня</Link> */}
         <Link to="/profile" className="underline">Профиль</Link>
       </div>
       <AuthCard />

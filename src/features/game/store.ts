@@ -1,4 +1,7 @@
 import { create, type StateCreator } from "zustand";
+import { isValidWord } from "../../data/dictionary";      
+import { InvalidEvent } from "react";
+
 
 export type LetterState = "absent" | "present" | "correct";
 export type GameStatus  = "playing" | "won" | "lost";
@@ -36,6 +39,7 @@ function promote(a?: LetterState, b?: LetterState): LetterState | undefined {
   return undefined;
 }
 
+type InvalidReasonStatus  = null | "length" | "notfound";
 export type GameStore = {
   day: string;
   answer: string;
@@ -43,6 +47,8 @@ export type GameStore = {
   current: string;                      // текущий ввод
   status: GameStatus;
   keyboard: Record<string, LetterState>;
+  invalidTick: number;                     // счетчик "сигналов" невалидного сабмита
+  invalidReason: InvalidReasonStatus
 
   init: (day: string, answer: string, resumeRows?: string[]) => void;
   input: (ch: string) => void;
@@ -51,6 +57,7 @@ export type GameStore = {
   reset: () => void;
   setDayAnswerWord: (word: string) => void;
   getScoredRow: (rowIndex: number) => LetterState[] | null;
+  setInvalidReason: (status: InvalidReasonStatus) => void
 };
 
 // ❗️ Больше НЕ указываем tuple для persist.
@@ -62,6 +69,9 @@ const creator: StateCreator<GameStore, [], [], GameStore> = (set, get) => ({
   current: "",
   status: "playing",
   keyboard: {},
+  invalidTick: 0,
+  invalidReason: null,
+
 
   setDayAnswerWord: (word) => set({ answer: word.toUpperCase() }),
 
@@ -90,12 +100,27 @@ const creator: StateCreator<GameStore, [], [], GameStore> = (set, get) => ({
     set({ current: current.slice(0, -1) });
   },
 
+  setInvalidReason: (status) => {
+    set({invalidReason: status })
+  },
+
   submit: () => {
     const { status, current, answer, rows, keyboard } = get();
     if (status !== "playing" || current.length !== WORD_LENGTH) return;
 
     const guess  = current.toUpperCase();
     const scored = scoreGuess(answer, guess);
+    console.log(guess, '🙈')
+        // 🔎 ВАЛИДАЦИЯ ПО СЛОВАРЮ
+      if (current.length !== WORD_LENGTH) {
+      set((s) => ({ invalidTick: s.invalidTick + 1, invalidReason: "length" }));
+      return;
+    }
+    // 2) слова нет в словаре
+    if (!isValidWord(guess)) {
+      set((s) => ({ invalidTick: s.invalidTick + 1, invalidReason: "notfound" }));
+      return;
+    }
 
     // обновляем сводный статус клавиш
     const kb = { ...keyboard };

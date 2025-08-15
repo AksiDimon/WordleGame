@@ -1,0 +1,40 @@
+.toast {
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, 0); /* базовая позиция */
+  z-index: 60;
+  pointer-events: none;           /* не блокируем клики по UI */
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-weight: 700;
+  font-size: 14px;
+  box-shadow: 0 8px 30px rgba(0,0,0,.35);
+  border: 1px solid;
+  /* старт анимации — невидим, чуть выше */
+  opacity: 0;
+  animation:
+    fadeInDown 180ms ease-out forwards,
+    fadeOutUp  800ms ease-in forwards 1600ms; /* авто-скрытие через ~2s */
+}
+
+/* визуальные варианты (оба «ошибка», но можно развести оттенки) */
+.error {
+  background: #e11d48;  /* rose-600 */
+  color: #fff;
+  border-color: #be123c; /* rose-700 */
+}
+.warning {
+  background: #f59e0b;  /* amber-500 */
+  color: #111827;
+  border-color: #d97706; /* amber-600 */
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translate(-50%, -14px); }
+  to   { opacity: 1; transform: translate(-50%, 0); }
+}
+@keyframes fadeOutUp {
+  from { opacity: 1; transform: translate(-50%, 0); }
+  to   { opacity: 0; transform: translate(-50%, -14px); }
+}

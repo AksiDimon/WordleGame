@@ -11,6 +11,8 @@ export type PublicUser = {
   photoURL?: string | null;
   email?: string | null;
   gamesPlayed: number;
+  gamesWon?: number;   // ← новое поле в типе
+  gamesLost?: number;  // ← новое поле в типе
   lastPlayedAt?: unknown;
 };
 
@@ -26,6 +28,8 @@ export async function ensureUserDocument(u: FirebaseUser) {
       photoURL: u.photoURL ?? null,
       email: u.email ?? null,
       gamesPlayed: 0,
+      gamesWon: 0,
+      gamesLost: 0,
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
     });

@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import { useParams, Navigate } from "react-router-dom";
-import { getUser, PublicUser } from "../services/users";
+import { useEffect, useState } from 'react';
+import { useParams, Navigate } from 'react-router-dom';
+import { getUser, PublicUser } from '../services/users';
 
 export default function PlayerStatsPage() {
   const { uid } = useParams<{ uid: string }>();
@@ -11,11 +11,13 @@ export default function PlayerStatsPage() {
 
   useEffect(() => {
     setLoading(true);
-    getUser(uid).then(setUser).finally(() => setLoading(false));
+    getUser(uid)
+      .then(setUser)
+      .finally(() => setLoading(false));
   }, [uid]);
 
   if (loading) return <div className="py-6">Загрузка…</div>;
-  if (!user)    return <div className="py-6 text-red-500">Игрок не найден</div>;
+  if (!user) return <div className="py-6 text-red-500">Игрок не найден</div>;
 
   return (
     <div className="space-y-4">
@@ -33,6 +35,8 @@ export default function PlayerStatsPage() {
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         <Stat label="Сыграно" value={user.gamesPlayed ?? 0} />
+        <Stat label="Побед" value={(user as any).gamesWon ?? 0} />
+        <Stat label="Поражений" value={(user as any).gamesLost ?? 0} />
         {/* сюда позже можно подтянуть users/{uid}/stats/main и показать Победы/Серии/Дистрибуцию */}
       </div>
     </div>
