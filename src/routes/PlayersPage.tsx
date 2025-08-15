@@ -15,7 +15,7 @@ export default function PlayersPage() {
   if (loading) return <div className="py-6">Загрузка игроков…</div>;
 
   return (
-    <div className="space-y-4">
+    <div className="panel p-4 space-y-4">
       <h2 className="text-xl font-semibold">Игроки</h2>
       <ul className="divide-y divide-zinc-200 dark:divide-zinc-800">
         {users.map((u) => (

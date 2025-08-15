@@ -23,6 +23,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     if(theme === 'light') root.className ='light'
     // синхронизируем подсказку для браузера
     root.style.colorScheme = theme === 'dark' ? 'dark' : 'light';
+    localStorage.setItem('theme', theme);
   }, [theme]);
 
   const value = useMemo(

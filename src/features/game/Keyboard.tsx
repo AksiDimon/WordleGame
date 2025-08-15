@@ -5,10 +5,10 @@ const ROW2 = "ASDFGHJKL".split("");
 const ROW3 = "ZXCVBNM".split("");
 
 function keyColor(status?: "absent" | "present" | "correct") {
-  if (status === "correct") return "bg-emerald-500 border-emerald-500 text-zinc-950";
-  if (status === "present") return "bg-amber-400 border-amber-400 text-zinc-950";
-  if (status === "absent")  return "bg-zinc-700 border-zinc-700 text-zinc-100";
-  return "bg-zinc-200 text-zinc-900 border-zinc-300 dark:bg-zinc-800 dark:text-zinc-100 dark:border-zinc-700";
+  if (status === "correct") return "bg-[var(--color-accent)] text-[var(--color-accent-fg)] border-[color-mix(in_oklch,var(--color-accent)_85%,black)]";
+  if (status === "present") return "bg-[var(--color-attn)] text-[var(--color-attn-fg)] border-[color-mix(in_oklch,var(--color-attn)_85%,black)]";
+  if (status === "absent")  return "bg-[var(--color-surface)] text-[var(--color-muted)] border-border";
+  return "bg-surface text-fg border-border";
 }
 
 export default function Keyboard() {
@@ -23,9 +23,9 @@ export default function Keyboard() {
       <button
         type="button"
         onClick={onClick}
-        className={`h-12 md:h-14 px-2 md:px-3 rounded-lg border text-sm md:text-base font-semibold ${keyColor(s)} ${
+        className={`h-12 md:h-14 px-2 md:px-3 rounded-xl border text-sm md:text-base font-semibold ${keyColor(s)} ${
           grow ? "col-span-2" : ""
-        }`}
+        } shadow-[0_6px_0_rgba(0,0,0,.25)] active:translate-y-[2px] active:shadow-none transition-all`}
       >
         {label}
       </button>

@@ -1,4 +1,3 @@
-
 import { signInWithPopup, signOut } from "firebase/auth";
 import { auth, googleProvider } from "../firebase";
 import { useAuth } from "../features/auth/auth.store";
@@ -18,85 +17,70 @@ export default function AuthCard() {
   };
 
   const signOutNow = async () => {
-    await signOut(auth);
+    try {
+      await signOut(auth);
+    } catch (e) {
+      // noop
+    }
   };
 
   if (loading) {
-    return <div style={styles.page}>Загрузка…</div>;
+    return (
+      <div className="min-h-[60dvh] grid place-items-center px-4">
+        <div className="text-sm opacity-70" aria-busy="true">Загрузка…</div>
+      </div>
+    );
   }
 
   if (!user) {
     return (
-      <div style={styles.page}>
-        <div style={styles.card}>
-          <h1 style={{ marginBottom: 8 }}>Firebase Google Auth</h1>
-          <p style={{ opacity: 0.7, marginBottom: 16 }}>Войдите, чтобы продолжить</p>
-          <button style={styles.primaryBtn} onClick={signIn}>Войти через Google</button>
-          {error && <p style={{ color: "#ef4444", marginTop: 12 }}>{error}</p>}
+      <div className="min-h-[60dvh] grid place-items-center px-4">
+        <div className="w-full max-w-sm text-center rounded-2xl border shadow-lg p-6
+                        bg-[var(--color-panel)] border-[var(--color-border)] text-[var(--color-fg)]">
+          <h1 className="mb-2 text-lg font-bold">Firebase Google Auth</h1>
+          <p className="mb-4 opacity-70">Войдите, чтобы продолжить</p>
+
+          <button
+            onClick={signIn}
+            className="btn btn-primary w-full"
+          >
+            Войти через Google
+          </button>
+
+          {error && <p className="mt-3 text-sm text-rose-500">{error}</p>}
         </div>
       </div>
     );
   }
 
   return (
-    <div style={styles.page}>
-      <div style={styles.card}>
-        <h1 style={{ marginBottom: 8 }}>Привет, {user.displayName ?? "безымянный"}!</h1>
-        <p style={{ opacity: 0.7, marginBottom: 16 }}>{user.email}</p>
+    <div className="min-h-[60dvh] grid place-items-center px-4">
+      <div className="w-full max-w-sm text-center rounded-2xl border shadow-lg p-6
+                      bg-[var(--color-panel)] border-[var(--color-border)] text-[var(--color-fg)]">
+        <h1 className="mb-2 text-lg font-bold">
+          Привет, {user.displayName ?? "безымянный"}!
+        </h1>
+        <p className="mb-4 opacity-70">{user.email}</p>
+
         {user.photoURL && (
           <img
             src={user.photoURL}
-            alt="avatar"
+            alt="Аватар"
+            className="w-24 h-24 rounded-xl mb-4 object-cover mx-auto"
             width={96}
             height={96}
-            style={{ borderRadius: 12, marginBottom: 16 }}
+            loading="lazy"
           />
         )}
-        <button style={styles.secondaryBtn} onClick={signOutNow}>Выйти</button>
+
+        <button
+          onClick={signOutNow}
+          className="btn btn-ghost w-full"
+        >
+          Выйти
+        </button>
       </div>
     </div>
   );
 }
 
-const styles: Record<string, React.CSSProperties> = {
-  page: {
-    minHeight: "60dvh",
-    display: "grid",
-    placeItems: "center",
-    background: "transparent",
-    color: "#fafafa",
-    padding: 16,
-    fontFamily:
-      "system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif",
-  },
-  card: {
-    width: "100%",
-    maxWidth: 420,
-    background: "#171717",
-    border: "1px solid #262626",
-    borderRadius: 16,
-    padding: 24,
-    textAlign: "center",
-    boxShadow: "0 10px 30px rgba(0,0,0,.35)",
-  },
-  primaryBtn: {
-    width: "100%",
-    padding: "12px 16px",
-    borderRadius: 10,
-    border: "1px solid #22c55e",
-    background: "#22c55e",
-    color: "#0a0a0a",
-    fontWeight: 700,
-    cursor: "pointer",
-  },
-  secondaryBtn: {
-    width: "100%",
-    padding: "12px 16px",
-    borderRadius: 10,
-    border: "1px solid #404040",
-    background: "transparent",
-    color: "#fafafa",
-    fontWeight: 700,
-    cursor: "pointer",
-  },
-};

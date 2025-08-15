@@ -4,7 +4,7 @@ import SyncBadge from "../components/SyncBadge";
 export default function ProfilePage() {
   const { user } = useAuth();
   return (
-    <div className="space-y-4">
+    <div className="panel p-4 space-y-4">
       <h2 className="text-xl font-semibold">Профиль: {user && <SyncBadge uid={user.uid} />}</h2>
       
       {/* Покажем ту же карточку (в залогиненом состоянии это приветствие и кнопка выхода) */}

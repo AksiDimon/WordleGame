@@ -43,7 +43,11 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100">
+    <div 
+    
+    className="min-h-screen text-fg game-bg"
+    // className="min-h-screen bg-white text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100"
+    >
       <Header/>
       <main className="p-4">
         <Outlet />

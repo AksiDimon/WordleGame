@@ -1,9 +1,12 @@
-import { Link, useLocation } from "react-router-dom";
-import ThemeToggle from "../features/theme/ThemeToggle";
-import { signInWithPopup, signOut } from "firebase/auth";
-import { useAuth } from "../features/auth/auth.store";
-import { auth, googleProvider } from "../firebase";
-import { useEffect, useState, useCallback } from "react";
+import { Link, NavLink, useLocation } from 'react-router-dom';
+import ThemeToggle from '../features/theme/ThemeToggle';
+import { signInWithPopup, signOut } from 'firebase/auth';
+import { useAuth } from '../features/auth/auth.store';
+import { auth, googleProvider } from '../firebase';
+import { useEffect, useState, useCallback } from 'react';
+import LogoTileW from './icons/LogoTileW';
+import IconLogout from './icons/IconLogout';
+import IconLogin from './icons/IconLogin';
 
 export function Header() {
   const { user, loading } = useAuth();
@@ -15,36 +18,84 @@ export function Header() {
 
   // Esc закрывает
   const onKey = useCallback((e: KeyboardEvent) => {
-    if (e.key === "Escape") setOpen(false);
+    if (e.key === 'Escape') setOpen(false);
   }, []);
   useEffect(() => {
     if (!open) return;
-    document.addEventListener("keydown", onKey);
+    document.addEventListener('keydown', onKey);
     const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+    document.body.style.overflow = 'hidden';
     return () => {
-      document.removeEventListener("keydown", onKey);
+      document.removeEventListener('keydown', onKey);
       document.body.style.overflow = prev;
     };
   }, [open, onKey]);
 
   return (
     <header className="p-4 border-b border-zinc-200 dark:border-zinc-800 flex items-center gap-4">
-      <Link to="/" className="font-bold">
-        Wordle Clone
+      <Link
+        to="/"
+        //   className="font-bold"
+        className="font-black tracking-tight text-lg relative"
+      >
+        {/* <span className="bg-gradient-to-r from-[var(--color-accent)] via-yellow-500 to-[var(--color-attn)] bg-clip-text text-transparent"> */}
+        <LogoTileW className="h-7 w-auto text-fg" />
+        {/* </span> */}
+        <span className="absolute -bottom-1 left-0 h-[2px] w-full bg-gradient-to-r from-[var(--color-accent)] to-[var(--color-attn)] opacity-60" />
+        {/* Wordle Clone */}
       </Link>
 
       {/* Desktop nav */}
       <nav className="ml-auto hidden md:flex items-center gap-3">
-        <Link to="/game">Играть</Link>
-        <Link to="/players">Игроки</Link>
-        <Link to="/profile">Профиль</Link>
+        <NavLink
+          to="/game"
+          className={({ isActive }) =>
+            `btn btn-ghost ${
+              isActive ? 'ring-2 ring-[var(--color-accent)] ring-offset-0' : ''
+            }`
+          }
+        >
+          Играть
+        </NavLink>
+        <NavLink
+          to="/players"
+          className={({ isActive }) =>
+            `btn btn-ghost ${
+              isActive ? 'ring-2 ring-[var(--color-accent)] ring-offset-0' : ''
+            }`
+          }
+        >
+          Игроки
+        </NavLink>
+        <NavLink
+          to="/profile"
+          className={({ isActive }) =>
+            `btn btn-ghost ${
+              isActive ? 'ring-2 ring-[var(--color-accent)] ring-offset-0' : ''
+            }`
+          }
+        >
+          Профиль
+        </NavLink>
+
         <ThemeToggle />
         {!loading &&
           (user ? (
-            <button onClick={() => signOut(auth)} className="underline">Выйти</button>
+            <button
+              onClick={() => signOut(auth)}
+              className="btn btn-danger"
+              title="Выйти из аккаунта"
+            >
+              <IconLogout className="w-4 h-4" />
+              Выйти
+            </button>
           ) : (
-            <button onClick={() => signInWithPopup(auth, googleProvider)} className="underline">
+            <button
+              onClick={() => signInWithPopup(auth, googleProvider)}
+              className="btn btn-primary"
+              title="Войти через Google"
+            >
+              <IconLogin className="w-4 h-4" />
               Войти
             </button>
           ))}
@@ -66,11 +117,15 @@ export function Header() {
 
       {/* Overlay + Drawer */}
       <div
-        className={`fixed inset-0 z-50 ${open ? "pointer-events-auto" : "pointer-events-none"}`}
+        className={`fixed inset-0 z-50 ${
+          open ? 'pointer-events-auto' : 'pointer-events-none'
+        }`}
       >
         {/* затемнение фона */}
         <div
-          className={`absolute inset-0 bg-black/40 dark:bg-black/60 transition-opacity ${open ? "opacity-100" : "opacity-0"}`}
+          className={`absolute inset-0 bg-black/40 dark:bg-black/60 transition-opacity ${
+            open ? 'opacity-100' : 'opacity-0'
+          }`}
           onClick={() => setOpen(false)}
         />
         {/* выезжающая панель */}
@@ -80,7 +135,7 @@ export function Header() {
           aria-modal="true"
           aria-label="Меню"
           className={`absolute right-0 top-0 h-full w-[82%] max-w-[320px] bg-white dark:bg-zinc-950 border-l border-zinc-200 dark:border-zinc-800 shadow-xl transition-transform duration-200 ${
-            open ? "translate-x-0" : "translate-x-full"
+            open ? 'translate-x-0' : 'translate-x-full'
           }`}
         >
           <div className="p-4 flex items-center justify-between border-b border-zinc-200 dark:border-zinc-800">
@@ -96,15 +151,46 @@ export function Header() {
           </div>
 
           <nav className="p-4 flex flex-col gap-3">
-            <Link to="/game" onClick={() => setOpen(false)} className="py-2">
+            <NavLink
+              to="/game"
+              onClick={() => setOpen(false)}
+              //  className="py-2"
+              className={({ isActive }) =>
+                `btn btn-ghost ${
+                  isActive
+                    ? 'ring-2 ring-[var(--color-accent)] ring-offset-0'
+                    : ''
+                }`
+              }
+            >
               Играть
-            </Link>
-            <Link to="/players" onClick={() => setOpen(false)} className="py-2">
+            </NavLink>
+            <NavLink
+              to="/players"
+              onClick={() => setOpen(false)}
+              className={({ isActive }) =>
+                `btn btn-ghost ${
+                  isActive
+                    ? 'ring-2 ring-[var(--color-accent)] ring-offset-0'
+                    : ''
+                }`
+              }
+            >
               Игроки
-            </Link>
-            <Link to="/profile" onClick={() => setOpen(false)} className="py-2">
+            </NavLink>
+            <NavLink
+              to="/profile"
+              onClick={() => setOpen(false)}
+              className={({ isActive }) =>
+                `btn btn-ghost ${
+                  isActive
+                    ? 'ring-2 ring-[var(--color-accent)] ring-offset-0'
+                    : ''
+                }`
+              }
+            >
               Профиль
-            </Link>
+            </NavLink>
 
             <div className="py-2">
               <ThemeToggle />
@@ -117,8 +203,10 @@ export function Header() {
                     setOpen(false);
                     signOut(auth);
                   }}
-                  className="text-left underline py-2"
+                  className="btn btn-danger"
+                  title="Выйти из аккаунта"
                 >
+                  <IconLogout className="w-4 h-4" />
                   Выйти
                 </button>
               ) : (
@@ -127,8 +215,10 @@ export function Header() {
                     setOpen(false);
                     signInWithPopup(auth, googleProvider);
                   }}
-                  className="text-left underline py-2"
+                  className="btn btn-primary"
+                  title="Войти через Google"
                 >
+                  <IconLogin className="w-4 h-4" />
                   Войти
                 </button>
               ))}
@@ -140,4 +230,3 @@ export function Header() {
 }
 
 export default Header;
-

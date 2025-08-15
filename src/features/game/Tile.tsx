@@ -8,15 +8,16 @@ type Props = {
 
 export default function Tile({ letter = "", status, animated }: Props) {
   const base =
-    "w-12 h-12 md:w-15 md:h-15 grid place-items-center rounded-lg border font-extrabold text-lg md:text-2xl uppercase select-none";
+    "w-12 h-12 md:w-14 md:h-14 grid place-items-center rounded-xl border-2 font-extrabold text-lg md:text-2xl uppercase select-none transition-all duration-150";
   const colors =
     status === "correct"
-      ? "bg-emerald-500 border-emerald-500 text-zinc-950"
+      ? "bg-[var(--color-accent)] border-[color-mix(in_oklch,var(--color-accent)_85%,black)] text-[var(--color-accent-fg)] shadow-[0_0_0_1px_rgba(0,0,0,.05),0_0_24px_color-mix(in_oklch,var(--color-accent)_35%,transparent)]"
       : status === "present"
-      ? "bg-amber-400 border-amber-400 text-zinc-950"
+      ? "bg-[var(--color-attn)] border-[color-mix(in_oklch,var(--color-attn)_85%,black)] text-[var(--color-attn-fg)] shadow-[0_0_0_1px_rgba(0,0,0,.05),0_0_24px_color-mix(in_oklch,var(--color-attn)_35%,transparent)]"
       : status === "absent"
-      ? "bg-zinc-700 border-zinc-700 text-zinc-100"
-      : "bg-transparent border-zinc-300 text-zinc-900 dark:border-zinc-700 dark:text-zinc-100";
+      ? "bg-[var(--color-surface)] border-border text-[var(--color-muted)]"
+      : "bg-surface border-border text-fg";
+
 
   return (
     <div className={`${base} ${colors} ${animated ? cls.flip : ""} ${letter && !status ? cls.pop : ""}`}>
