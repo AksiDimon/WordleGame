@@ -49,8 +49,8 @@ html, body, #root { height: 100%; }
 /* ===== Фон игры + утилиты ===== */
 .game-bg {
   background:
-    radial-gradient(1200px 700px at -10% -10%, color-mix(in oklch, var(--color-accent) 12%, transparent), transparent 60%),
-    radial-gradient(900px 600px at 110% 0%, color-mix(in oklch, var(--color-attn) 10%, transparent), transparent 55%),
+    radial-gradient(1000px 900px at -10% -10%, color-mix(in oklch, var(--color-accent) 14%, transparent), transparent 60%),
+    radial-gradient(1000px 700px at 110% 0%, color-mix(in oklch, var(--color-attn) 10%, transparent), transparent 55%),
     linear-gradient(180deg, color-mix(in oklch, var(--color-bg) 96%, transparent), var(--color-bg)),
     repeating-linear-gradient(0deg, color-mix(in oklch, var(--color-fg) 8%, transparent) 0 1px, transparent 1px 24px);
 }

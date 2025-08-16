@@ -44,15 +44,6 @@ export async function ensureUserDocument(u: FirebaseUser) {
   }
 }
 
-export async function bumpGamesPlayed(uid: string) {
-  const ref = doc(db, "users", uid);
-  // увеличиваем всегда на 1
-  await updateDoc(ref, {
-    gamesPlayed: increment(1),
-    lastPlayedAt: serverTimestamp(),
-    updatedAt: serverTimestamp(),
-  });
-}
 
 export async function getUsersTop(n = 50): Promise<PublicUser[]> {
   const q = query(collection(db, "users"), orderBy("gamesPlayed", "desc"), limit(n));

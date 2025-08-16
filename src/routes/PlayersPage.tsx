@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getUsersTop, PublicUser } from '../services/users';
 import { Link } from 'react-router-dom';
+import { Loader } from '../components/Loader';
 
 export default function PlayersPage() {
   const [users, setUsers] = useState<PublicUser[]>([]);
@@ -12,7 +13,7 @@ export default function PlayersPage() {
       .finally(() => setLoading(false));
   }, []);
 
-  if (loading) return <div className="py-6">Загрузка игроков…</div>;
+  if (loading) return <div className="py-6 flex justify-center "><Loader/></div>;
 
   return (
     <div className="panel p-4 space-y-4">

@@ -5,8 +5,8 @@ import { useAuth } from '../features/auth/auth.store';
 import { auth, googleProvider } from '../firebase';
 import { useEffect, useState, useCallback } from 'react';
 import LogoTileW from './icons/LogoTileW';
-import IconLogout from './icons/IconLogout';
-import IconLogin from './icons/IconLogin';
+import { LogoutButton } from './LogoutButton';
+import { LoginButton } from './LoginButton';
 
 export function Header() {
   const { user, loading } = useAuth();
@@ -81,23 +81,11 @@ export function Header() {
         <ThemeToggle />
         {!loading &&
           (user ? (
-            <button
-              onClick={() => signOut(auth)}
-              className="btn btn-danger"
-              title="Выйти из аккаунта"
-            >
-              <IconLogout className="w-4 h-4" />
-              Выйти
-            </button>
+            <LogoutButton onClick={() => signOut(auth)} />
           ) : (
-            <button
+            <LoginButton
               onClick={() => signInWithPopup(auth, googleProvider)}
-              className="btn btn-primary"
-              title="Войти через Google"
-            >
-              <IconLogin className="w-4 h-4" />
-              Войти
-            </button>
+            />
           ))}
       </nav>
 
@@ -198,29 +186,19 @@ export function Header() {
 
             {!loading &&
               (user ? (
-                <button
+                <LogoutButton
                   onClick={() => {
                     setOpen(false);
                     signOut(auth);
                   }}
-                  className="btn btn-danger"
-                  title="Выйти из аккаунта"
-                >
-                  <IconLogout className="w-4 h-4" />
-                  Выйти
-                </button>
+                />
               ) : (
-                <button
+                <LoginButton
                   onClick={() => {
                     setOpen(false);
                     signInWithPopup(auth, googleProvider);
                   }}
-                  className="btn btn-primary"
-                  title="Войти через Google"
-                >
-                  <IconLogin className="w-4 h-4" />
-                  Войти
-                </button>
+                />
               ))}
           </nav>
         </aside>
@@ -229,4 +207,3 @@ export function Header() {
   );
 }
 
-export default Header;

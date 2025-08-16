@@ -25,7 +25,7 @@ export default function Keyboard() {
         onClick={onClick}
         className={`h-12 md:h-14 px-2 md:px-3 rounded-xl border text-sm md:text-base font-semibold ${keyColor(s)} ${
           grow ? "col-span-2" : ""
-        } shadow-[0_6px_0_rgba(0,0,0,.25)] active:translate-y-[2px] active:shadow-none transition-all`}
+        } shadow-[0_6px_0_rgba(0,0,0,.25)] dark:shadow-[0_6px_0_rgba(0,128,0,.25)] active:translate-y-[2px] active:shadow-none transition-all`}
       >
         {label}
       </button>

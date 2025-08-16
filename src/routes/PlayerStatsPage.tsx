@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, Navigate } from 'react-router-dom';
 import { getUser, PublicUser } from '../services/users';
+import { Loader } from '../components/Loader';
 
 export default function PlayerStatsPage() {
   const { uid } = useParams<{ uid: string }>();
@@ -16,7 +17,7 @@ export default function PlayerStatsPage() {
       .finally(() => setLoading(false));
   }, [uid]);
 
-  if (loading) return <div className="py-6">Загрузка…</div>;
+  if (loading) return <div className="py-6 flex justify-center "><Loader/></div>;
   if (!user) return <div className="py-6 text-red-500">Игрок не найден</div>;
 
   return (

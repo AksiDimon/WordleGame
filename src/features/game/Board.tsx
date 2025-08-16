@@ -8,7 +8,6 @@ export default function Board() {
   const rows        = useGameStore((s) => s.rows);
   const current     = useGameStore((s) => s.current);
   const status      = useGameStore((s) => s.status);
-  const answer      = useGameStore((s) => s.answer.toUpperCase());
   const getScoredRow= useGameStore((s) => s.getScoredRow);
   const day         = useGameStore((s) => s.day); // если ты его инициализируешь в init(day, word)
   const { user }    = useAuth();
