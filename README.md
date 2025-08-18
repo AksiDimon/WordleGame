@@ -6,11 +6,10 @@
 
 ```bash
 npm i
-cp .env.local.example .env.local  # заполните ключи из Firebase Console
+cp .env.local.example .env.local
 npm run dev
 ```
 
-## Настройка Firebase
+## Firebase
 
-1. В консоли Firebase включите **Authentication → Sign-in method → Google**.
-2. В _Project settings → General → Your apps_ создайте Web App и скопируйте конфиг в `.env.local`.
+
