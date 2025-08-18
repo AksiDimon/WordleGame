@@ -6,7 +6,7 @@ export function useCountdown(targetAt?: Date | null) {
     if (!targetAt) return;
     const id = setInterval(() => setNow(Date.now()), 1000);
     return () => clearInterval(id);
-  }, [targetAt?.getTime()]);
+  }, [targetAt]);
 
   const ms = Math.max(0, (targetAt?.getTime() ?? 0) - now);
 

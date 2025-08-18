@@ -1,9 +1,10 @@
-import { db } from "../firebase";
+import type { User as FirebaseUser } from "firebase/auth";
 import {
   doc, setDoc, getDoc, getDocs, collection,
-  orderBy, limit, query, serverTimestamp, increment, updateDoc 
+  orderBy, limit, query, serverTimestamp, updateDoc 
 } from "firebase/firestore";
-import type { User as FirebaseUser } from "firebase/auth";
+
+import { db } from "../firebase";
 
 export type PublicUser = {
   id: string;
@@ -11,8 +12,8 @@ export type PublicUser = {
   photoURL?: string | null;
   email?: string | null;
   gamesPlayed: number;
-  gamesWon?: number;   // ← новое поле в типе
-  gamesLost?: number;  // ← новое поле в типе
+  gamesWon?: number;   
+  gamesLost?: number;  
   lastPlayedAt?: unknown;
 };
 
@@ -21,7 +22,6 @@ export async function ensureUserDocument(u: FirebaseUser) {
   const snap = await getDoc(ref);
 
   if (!snap.exists()) {
-    // создаём ОДИН РАЗ, ставим gamesPlayed: 0
     await setDoc(ref, {
       id: u.uid,
       name: u.displayName ?? (u.email ?? "Anonymous"),
@@ -34,7 +34,6 @@ export async function ensureUserDocument(u: FirebaseUser) {
       updatedAt: serverTimestamp(),
     });
   } else {
-    // при следующих логинах НЕ трогаем gamesPlayed и createdAt
     await updateDoc(ref, {
       name: u.displayName ?? (u.email ?? "Anonymous"),
       photoURL: u.photoURL ?? null,
@@ -48,11 +47,11 @@ export async function ensureUserDocument(u: FirebaseUser) {
 export async function getUsersTop(n = 50): Promise<PublicUser[]> {
   const q = query(collection(db, "users"), orderBy("gamesPlayed", "desc"), limit(n));
   const snap = await getDocs(q);
-  return snap.docs.map(d => ({ id: d.id, ...(d.data() as any) })) as PublicUser[];
+  return snap.docs.map(d => ({ id: d.id, ...(d.data()) })) as PublicUser[];
 }
 
 export async function getUser(uid: string): Promise<PublicUser | null> {
   const ref = doc(db, "users", uid);
   const snap = await getDoc(ref);
-  return snap.exists() ? ({ id: snap.id, ...(snap.data() as any) } as PublicUser) : null;
+  return snap.exists() ? ({ id: snap.id, ...(snap.data()) } as PublicUser) : null;
 }

@@ -1,7 +1,8 @@
 import { doc, runTransaction, serverTimestamp } from "firebase/firestore";
-import { db } from "../firebase"; // импортируй свою инициализацию Firebase
 
-// words — это твой локальный массив слов
+import { db } from "../firebase"; 
+
+
 export async function getDailyWord(words: string[]) {
   const ref = doc(db, "game", "daily");
 
@@ -14,13 +15,12 @@ export async function getDailyWord(words: string[]) {
       const now = new Date();
       const diffHours = (now.getTime() - lastUpdated.getTime()) / (1000 * 60 * 60);
 
-      // Если прошло меньше 24 часов → возвращаем текущий индекс
+
       if (diffHours < 24) {
         return words[data.index];
       }
     }
 
-    // Если документа нет или прошло 24 часа → генерируем новый индекс
     const randomIndex = Math.floor(Math.random() * words.length);
     transaction.set(ref, {
       index: randomIndex,

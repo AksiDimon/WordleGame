@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
-import Tile from './Tile';
+
 import { MAX_ROWS, WORD_LENGTH, useGameStore } from './store';
+import Tile from './Tile';
 import { saveGameResultOncePerDay, formatDay } from '../../services/game';
 import { useAuth } from '../auth/auth.store';
 
@@ -21,7 +22,7 @@ export default function Board() {
 
     savedRef.current = true;
 
-    const gameDay = day || formatDay(); // подстрахуемся
+    const gameDay = day || formatDay();
     saveGameResultOncePerDay({
       uid: user.uid,
       day: gameDay,
@@ -29,7 +30,7 @@ export default function Board() {
       rows,
     }).catch(err => {
       console.error(err);
-      savedRef.current = false; // позволим повторить при сетевой ошибке
+      savedRef.current = false;
     });
   }, [status, rows, user?.uid, day]);
 
@@ -61,5 +62,3 @@ export default function Board() {
   );
 }
 
-
-//Здесь для показа статусов по завершённым строкам я вычисляю их на лету: для точной логики мы уже считаем в редьюсере, но для UI этого достаточно. Позже, когда подключим БД/валидацию — вынесем в общее место.

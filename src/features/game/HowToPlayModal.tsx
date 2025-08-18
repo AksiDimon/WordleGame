@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+
 import Tile from "./Tile";
 
 type Props = { open: boolean; onClose: () => void };
@@ -6,7 +7,7 @@ type Props = { open: boolean; onClose: () => void };
 export default function HowToPlayModal({ open, onClose }: Props) {
   const panelRef = useRef<HTMLDivElement | null>(null);
 
-  // закрытие по Esc и блокировка скролла
+  // закрытие по Esc
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
@@ -21,7 +22,7 @@ export default function HowToPlayModal({ open, onClose }: Props) {
 
   if (!open) return null;
 
-  // мини-бейдж буквы в тексте
+
   const Badge = ({ ch, kind }: { ch: string; kind: "absent"|"present"|"correct" }) => {
     const cls =
       kind === "correct"
@@ -38,12 +39,12 @@ export default function HowToPlayModal({ open, onClose }: Props) {
 
   return (
     <div className="fixed inset-0 z-50">
-      {/* затемнение фона */}
+      
       <div
         className="absolute inset-0 bg-black/40 dark:bg-black/60 opacity-100"
         onClick={onClose}
       />
-      {/* панель */}
+      
       <div
         ref={panelRef}
         role="dialog"
@@ -53,7 +54,7 @@ export default function HowToPlayModal({ open, onClose }: Props) {
                    animate-[modalIn_.18s_ease-out] 
                    [@keyframes_modalIn_]{from{opacity:0;transform:translate(-50%,-6px)}to{opacity:1;transform:translate(-50%,0)}}"
       >
-        {/* заголовок */}
+        
         <div className="flex items-center justify-between px-4 py-3 bg-surface/70 border-b border-border">
           <h3 className="text-lg font-semibold">Как играть</h3>
           <button
@@ -65,7 +66,7 @@ export default function HowToPlayModal({ open, onClose }: Props) {
           </button>
         </div>
 
-        {/* контент */}
+        
         <div className="p-5 space-y-5 text-sm">
           <p className="text-center max-w-prose mx-auto">
             Угадайте загаданное слово из пяти букв за <strong>6</strong> попыток.
@@ -73,7 +74,7 @@ export default function HowToPlayModal({ open, onClose }: Props) {
             близко вы к ответу.
           </p>
 
-          {/* пример TABLE */}
+          
           <div className="flex flex-col items-center gap-3">
             <div className="text-center opacity-80">Начните с любого слова, например:</div>
             <div className="grid grid-cols-5 gap-1.5">
@@ -100,7 +101,6 @@ export default function HowToPlayModal({ open, onClose }: Props) {
             </div>
           </div>
 
-          {/* ещё попытка + победа */}
           <div className="text-center space-y-3">
             <div className="opacity-80">Попробуйте найти совпадающие буквы:</div>
             <div className="grid grid-cols-5 gap-1.5 place-content-center">

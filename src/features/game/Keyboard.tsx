@@ -54,6 +54,4 @@ export default function Keyboard() {
     </div>
   );
 }
-
-
-//Сейчас раскладка EN QWERTY. Если захочешь RU — заменим массивы ROW* на кириллицу и изменим фильтр в usePhysicalKeyboard на /^[А-ЯЁ]$/i.
+//Сделать на RU

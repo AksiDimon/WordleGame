@@ -1,6 +1,7 @@
 import { create, type StateCreator } from "zustand";
+
 import { isValidWord } from "../../data/dictionary";      
-import { InvalidEvent } from "react";
+
 
 
 export type LetterState = "absent" | "present" | "correct";
@@ -19,11 +20,11 @@ function scoreGuess(answer: string, guess: string): LetterState[] {
   const res: LetterState[] = Array(WORD_LENGTH).fill("absent");
   const used: boolean[] = Array(WORD_LENGTH).fill(false);
 
-  // pass 1: correct
+
   for (let i = 0; i < WORD_LENGTH; i++) {
     if (G[i] === A[i]) { res[i] = "correct"; used[i] = true; }
   }
-  // pass 2: present
+
   for (let i = 0; i < WORD_LENGTH; i++) {
     if (res[i] === "correct") continue;
     const idx = A.findIndex((ch, j) => !used[j] && ch === G[i]);
@@ -43,11 +44,11 @@ type InvalidReasonStatus  = null | "length" | "notfound";
 export type GameStore = {
   day: string;
   answer: string;
-  rows: string[];                       // завершённые догадки (UPPERCASE)
-  current: string;                      // текущий ввод
+  rows: string[];                       
+  current: string;                      
   status: GameStatus;
   keyboard: Record<string, LetterState>;
-  invalidTick: number;                     // счетчик "сигналов" невалидного сабмита
+  invalidTick: number;                    
   invalidReason: InvalidReasonStatus
 
   init: (day: string, answer: string, resumeRows?: string[]) => void;
@@ -60,8 +61,7 @@ export type GameStore = {
   setInvalidReason: (status: InvalidReasonStatus) => void
 };
 
-// ❗️ Больше НЕ указываем tuple для persist.
-// Можно вообще обойтись без StateCreator, но оставлю для наглядности.
+
 const creator: StateCreator<GameStore, [], [], GameStore> = (set, get) => ({
   day: "",
   answer: "",
@@ -110,19 +110,18 @@ const creator: StateCreator<GameStore, [], [], GameStore> = (set, get) => ({
 
     const guess  = current.toUpperCase();
     const scored = scoreGuess(answer, guess);
-    console.log(guess, '🙈')
-        // 🔎 ВАЛИДАЦИЯ ПО СЛОВАРЮ
+
       if (current.length !== WORD_LENGTH) {
       set((s) => ({ invalidTick: s.invalidTick + 1, invalidReason: "length" }));
       return;
     }
-    // 2) слова нет в словаре
+
     if (!isValidWord(guess)) {
       set((s) => ({ invalidTick: s.invalidTick + 1, invalidReason: "notfound" }));
       return;
     }
 
-    // обновляем сводный статус клавиш
+
     const kb = { ...keyboard };
     for (let i = 0; i < WORD_LENGTH; i++) {
       const key = guess[i];
@@ -131,7 +130,7 @@ const creator: StateCreator<GameStore, [], [], GameStore> = (set, get) => ({
 
     const nextRows = [...rows, guess];
     const won  = guess === answer;
-    const lost = !won && nextRows.length >= MAX_ROWS; // ← не жёсткая "6"
+    const lost = !won && nextRows.length >= MAX_ROWS; 
 
     set({
       rows: nextRows,
@@ -151,5 +150,5 @@ const creator: StateCreator<GameStore, [], [], GameStore> = (set, get) => ({
   },
 });
 
-// ✅ Правильный экспорт стора без persist
+
 export const useGameStore = create<GameStore>(creator);

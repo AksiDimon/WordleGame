@@ -1,58 +1,79 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --radius:          14px;
+  --radius: 14px;
 
-  --color-bg:        oklch(98% 0 0);
-  --color-fg:        oklch(20% 0 0);
-  --color-surface:   oklch(96% 0 0);
-  --color-panel:     oklch(95% 0 0);
-  --color-border:    oklch(88% 0 0);
+  --color-bg: oklch(98% 0 0);
+  --color-fg: oklch(20% 0 0);
+  --color-surface: oklch(96% 0 0);
+  --color-panel: oklch(95% 0 0);
+  --color-border: oklch(88% 0 0);
 
-  --color-accent:    oklch(73% 0.17 150); /* неоново-зелёный */
+  --color-accent: oklch(73% 0.17 150); /* неоново-зелёный */
   --color-accent-fg: oklch(18% 0.03 150);
 
-  --color-attn:      oklch(78% 0.15 80);  /* янтарный для present */
-  --color-attn-fg:   oklch(22% 0.04 80);
+  --color-attn: oklch(78% 0.15 80); /* янтарный для present */
+  --color-attn-fg: oklch(22% 0.04 80);
 
-  --color-muted:     oklch(60% 0 0);      /* для неактивных клавиш/плиток */
+  --color-muted: oklch(60% 0 0); /* для неактивных клавиш/плиток */
 
-  --color-danger:    oklch(60% 0.22 20);  /* насыщенный розово-красный */
+  --color-danger: oklch(60% 0.22 20); /* насыщенный розово-красный */
   --color-danger-fg: oklch(15% 0.03 20);
-
 }
 
 .dark {
-  --color-bg:        oklch(15% 0 0);
-  --color-fg:        oklch(96% 0 0);
-  --color-surface:   oklch(20% 0 0);
-  --color-panel:     oklch(18% 0 0);
-  --color-border:    oklch(32% 0 0);
+  --color-bg: oklch(15% 0 0);
+  --color-fg: oklch(96% 0 0);
+  --color-surface: oklch(20% 0 0);
+  --color-panel: oklch(18% 0 0);
+  --color-border: oklch(32% 0 0);
 
-  --color-accent:    oklch(70% 0.20 150);
+  --color-accent: oklch(70% 0.2 150);
   --color-accent-fg: oklch(15% 0.03 150);
 
-  --color-attn:      oklch(75% 0.18 80);
-  --color-attn-fg:   oklch(18% 0.04 80);
+  --color-attn: oklch(75% 0.18 80);
+  --color-attn-fg: oklch(18% 0.04 80);
 
-  --color-muted:     oklch(62% 0 0);
+  --color-muted: oklch(62% 0 0);
 
-  --color-danger:    oklch(65% 0.25 20);
+  --color-danger: oklch(65% 0.25 20);
   --color-danger-fg: oklch(12% 0.03 20);
 }
 
-:root { color-scheme: light dark; }
-html, body, #root { height: 100%; }
+:root {
+  color-scheme: light dark;
+}
+html,
+body,
+#root {
+  height: 100%;
+}
 
 /* ===== Фон игры + утилиты ===== */
 .game-bg {
   background:
-    radial-gradient(1000px 900px at -10% -10%, color-mix(in oklch, var(--color-accent) 14%, transparent), transparent 60%),
-    radial-gradient(1000px 700px at 110% 0%, color-mix(in oklch, var(--color-attn) 10%, transparent), transparent 55%),
-    linear-gradient(180deg, color-mix(in oklch, var(--color-bg) 96%, transparent), var(--color-bg)),
-    repeating-linear-gradient(0deg, color-mix(in oklch, var(--color-fg) 8%, transparent) 0 1px, transparent 1px 24px);
+    radial-gradient(
+      1000px 900px at -10% -10%,
+      color-mix(in oklch, var(--color-accent) 14%, transparent),
+      transparent 60%
+    ),
+    radial-gradient(
+      1000px 700px at 110% 0%,
+      color-mix(in oklch, var(--color-attn) 10%, transparent),
+      transparent 55%
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in oklch, var(--color-bg) 96%, transparent),
+      var(--color-bg)
+    ),
+    repeating-linear-gradient(
+      0deg,
+      color-mix(in oklch, var(--color-fg) 8%, transparent) 0 1px,
+      transparent 1px 24px
+    );
 }
 
 .panel {
@@ -66,9 +87,13 @@ html, body, #root { height: 100%; }
   background: var(--color-accent);
   color: var(--color-accent-fg);
   border-color: color-mix(in oklch, var(--color-accent) 80%, black);
-  box-shadow: 0 8px 20px color-mix(in oklch, var(--color-accent) 35%, transparent);
+  box-shadow: 0 8px 20px
+    color-mix(in oklch, var(--color-accent) 35%, transparent);
 }
-.btn-primary:hover { filter: brightness(.96); transform: translateY(-1px); }
+.btn-primary:hover {
+  filter: brightness(0.96);
+  transform: translateY(-1px);
+}
 .btn-ghost {
   @apply border-border bg-surface/60 backdrop-blur;
   color: var(--color-fg);
@@ -78,9 +103,18 @@ html, body, #root { height: 100%; }
   background: var(--color-danger);
   color: var(--color-danger-fg);
   border-color: color-mix(in oklch, var(--color-danger) 80%, black);
-  box-shadow: 0 8px 20px color-mix(in oklch, var(--color-danger) 35%, transparent);
-  transition: transform .15s ease, filter .15s ease, box-shadow .2s ease;
+  box-shadow: 0 8px 20px
+    color-mix(in oklch, var(--color-danger) 35%, transparent);
+  transition:
+    transform 0.15s ease,
+    filter 0.15s ease,
+    box-shadow 0.2s ease;
 }
-.btn-danger:hover { filter: brightness(.96); transform: translateY(-1px); }
-.btn-danger:active { transform: translateY(0); box-shadow: none; }
-
+.btn-danger:hover {
+  filter: brightness(0.96);
+  transform: translateY(-1px);
+}
+.btn-danger:active {
+  transform: translateY(0);
+  box-shadow: none;
+}

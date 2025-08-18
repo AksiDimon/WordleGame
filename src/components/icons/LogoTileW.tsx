@@ -1,7 +1,5 @@
 import React from "react";
 
-
-/** Шеститайл «WORDLE» — два тайла подсвечены как в игре (accent/attn) */
 export default function WordmarkTiles({ className = "h-6 w-auto" }: { className?: string }) {
   const t = [
     { ch: "W", fill: "var(--color-surface)", stroke: "var(--color-border)" },

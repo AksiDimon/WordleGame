@@ -7,11 +7,10 @@ export const useTheme = () => useContext(ThemeCtx);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<Theme>(() => {
-    // читаем то же значение, что использовали в index.html
+
     const saved = localStorage.getItem('theme');
     if (saved === 'light' || saved === 'dark') return saved;
-    // если не сохранено — не навязываем, оставим как сделал скрипт init (prefers-color-scheme)
-    // но для стейта выберем текущий класс на <html>
+
     return document.documentElement.classList.contains('dark')
       ? 'dark'
       : 'light';
@@ -21,7 +20,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     const root = document.documentElement;
     if (theme === 'dark') root.className ='dark';
     if(theme === 'light') root.className ='light'
-    // синхронизируем подсказку для браузера
+
     root.style.colorScheme = theme === 'dark' ? 'dark' : 'light';
     localStorage.setItem('theme', theme);
   }, [theme]);

@@ -1,5 +1,5 @@
-import { create } from 'zustand';
 import type { User } from 'firebase/auth';
+import { create } from 'zustand';
 
 type AuthState = {
   user: User | null;
@@ -15,7 +15,6 @@ export const useAuthStore = create<AuthState>((set) => ({
   setLoading: (loading) => set({ loading }),
 }));
 
-/** Удобный хук для компонентов — возвращает кортеж (меньше шанс лишних ререндеров) */
 export const useAuth = () => {
   const user = useAuthStore((state) => state.user);
   const loading = useAuthStore((state) => state.loading);

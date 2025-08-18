@@ -1,22 +1,22 @@
-import { Link, NavLink, useLocation } from 'react-router-dom';
-import ThemeToggle from '../features/theme/ThemeToggle';
 import { signInWithPopup, signOut } from 'firebase/auth';
+import { useEffect, useState, useCallback } from 'react';
+import { Link, NavLink, useLocation } from 'react-router-dom';
+
 import { useAuth } from '../features/auth/auth.store';
 import { auth, googleProvider } from '../firebase';
-import { useEffect, useState, useCallback } from 'react';
 import LogoTileW from './icons/LogoTileW';
-import { LogoutButton } from './LogoutButton';
 import { LoginButton } from './LoginButton';
+import { LogoutButton } from './LogoutButton';
+import ThemeToggle from '../features/theme/ThemeToggle';
 
 export function Header() {
   const { user, loading } = useAuth();
   const [open, setOpen] = useState(false);
   const loc = useLocation();
 
-  // закрывать при смене маршрута
+
   useEffect(() => setOpen(false), [loc]);
 
-  // Esc закрывает
   const onKey = useCallback((e: KeyboardEvent) => {
     if (e.key === 'Escape') setOpen(false);
   }, []);
@@ -38,7 +38,6 @@ export function Header() {
         //   className="font-bold"
         className="font-black tracking-tight text-lg relative"
       >
-        {/* <span className="bg-gradient-to-r from-[var(--color-accent)] via-yellow-500 to-[var(--color-attn)] bg-clip-text text-transparent"> */}
         <LogoTileW className="h-7 w-auto text-fg" />
         {/* </span> */}
         <span className="absolute -bottom-1 left-0 h-[2px] w-full bg-gradient-to-r from-[var(--color-accent)] to-[var(--color-attn)] opacity-60" />
@@ -142,7 +141,6 @@ export function Header() {
             <NavLink
               to="/game"
               onClick={() => setOpen(false)}
-              //  className="py-2"
               className={({ isActive }) =>
                 `btn btn-ghost ${
                   isActive
@@ -189,14 +187,14 @@ export function Header() {
                 <LogoutButton
                   onClick={() => {
                     setOpen(false);
-                    signOut(auth);
+                   void signOut(auth);
                   }}
                 />
               ) : (
                 <LoginButton
                   onClick={() => {
                     setOpen(false);
-                    signInWithPopup(auth, googleProvider);
+                   void signInWithPopup(auth, googleProvider);
                   }}
                 />
               ))}

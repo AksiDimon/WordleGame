@@ -13,4 +13,4 @@ npm run dev
 ## Настройка Firebase
 
 1. В консоли Firebase включите **Authentication → Sign-in method → Google**.
-2. В *Project settings → General → Your apps* создайте Web App и скопируйте конфиг в `.env.local`.
+2. В _Project settings → General → Your apps_ создайте Web App и скопируйте конфиг в `.env.local`.

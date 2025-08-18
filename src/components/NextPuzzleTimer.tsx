@@ -1,14 +1,20 @@
-import { useEffect, useState } from "react";
-import { getNextRevealAt } from "../services/daily";
-import { useCountdown } from "../features/game/useCountdown";
+import { useEffect, useState } from 'react';
+
+import { useCountdown } from '../features/game/useCountdown';
+import { getNextRevealAt } from '../services/daily';
 
 export default function NextPuzzleTimer() {
   const [target, setTarget] = useState<Date | null>(null);
 
   useEffect(() => {
     let mounted = true;
-    getNextRevealAt().then((d) => mounted && setTarget(d));
-    return () => { mounted = false; };
+    getNextRevealAt().then(
+      (d) => mounted && setTarget(d),
+      (e) => console.error(`Ops Error Timer Request :${e}`)
+    );
+    return () => {
+      mounted = false;
+    };
   }, []);
 
   const { d, h, m, s, ms } = useCountdown(target);
@@ -34,12 +40,17 @@ export default function NextPuzzleTimer() {
     <div className="text-l font-medium bg-surface/60 border border-border rounded-lg px-3 py-2 inline-flex items-baseline gap-2">
       <span className="opacity-70">До следующей загадки:</span>
       <span className="tabular-nums">
-        {d > 0 && (<><strong>{d}</strong><span className="opacity-70">д </span></>)}
-        <strong>{String(h).padStart(2, "0")}</strong>
+        {d > 0 && (
+          <>
+            <strong>{d}</strong>
+            <span className="opacity-70">д </span>
+          </>
+        )}
+        <strong>{String(h).padStart(2, '0')}</strong>
         <span className="opacity-70">:</span>
-        <strong>{String(m).padStart(2, "0")}</strong>
+        <strong>{String(m).padStart(2, '0')}</strong>
         <span className="opacity-70">:</span>
-        <strong>{String(s).padStart(2, "0")}</strong>
+        <strong>{String(s).padStart(2, '0')}</strong>
       </span>
     </div>
   );

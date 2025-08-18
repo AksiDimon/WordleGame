@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import { getUsersTop, PublicUser } from '../services/users';
 import { Link } from 'react-router-dom';
+
 import { Loader } from '../components/Loader';
+import { getUsersTop, type PublicUser } from '../services/users';
 
 export default function PlayersPage() {
   const [users, setUsers] = useState<PublicUser[]>([]);
@@ -9,7 +10,7 @@ export default function PlayersPage() {
 
   useEffect(() => {
     getUsersTop(100)
-      .then(setUsers)
+      .then(setUsers, (err) => console.error('Не удалось загрузить топ пользователей:', err))
       .finally(() => setLoading(false));
   }, []);
 
@@ -30,11 +31,11 @@ export default function PlayersPage() {
               <div className="font-medium">{u.name}</div>
               <div className="text-sm opacity-70">
                 Сыграно: {u.gamesPlayed ?? 0}
-                {typeof (u as any).gamesWon === 'number' && (
-                  <> • Побед: {(u as any).gamesWon}</>
+                {typeof (u).gamesWon === 'number' && (
+                  <> • Побед: {(u).gamesWon}</>
                 )}
-                {typeof (u as any).gamesLost === 'number' && (
-                  <> • Поражений: {(u as any).gamesLost}</>
+                {typeof (u).gamesLost === 'number' && (
+                  <> • Поражений: {(u).gamesLost}</>
                 )}
               </div>
             </div>

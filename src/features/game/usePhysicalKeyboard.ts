@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+
 import { useGameStore } from "./store";
 
 function isTextInput(el: EventTarget | null): boolean {

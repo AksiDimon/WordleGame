@@ -1,12 +1,13 @@
+import { useEffect, useState } from 'react';
+
+import IconHelp from '../components/icons/IconHelp';
 import Board from '../features/game/Board';
+import EndGameModal from '../features/game/EndGameModal';
+import HowToPlayModal from '../features/game/HowToPlayModal';
 import Keyboard from '../features/game/Keyboard';
 import { useGameStore } from '../features/game/store';
 import { usePhysicalKeyboard } from '../features/game/usePhysicalKeyboard';
-import EndGameModal from '../features/game/EndGameModal';
-import { useEffect, useState } from 'react';
 import InvalidToast from '../features/ui/InvalidToast';
-import IconHelp from '../components/icons/IconHelp';
-import HowToPlayModal from '../features/game/HowToPlayModal';
 
 export default function GamePage() {
   const status = useGameStore((s) => s.status);
@@ -16,7 +17,7 @@ export default function GamePage() {
 
   useEffect(() => {
     return () => {
-      reset(); // rows=[], current="", keyboard={}, status="playing"
+      reset(); 
     };
   }, [reset]);
 
@@ -52,5 +53,3 @@ export default function GamePage() {
   );
 }
 
-// dark:bg-amber-700   bg-blue-300 так изменять цвета темы!
-//GameDispatchBridge — небольшой лайфхак, чтобы хук usePhysicalKeyboard мог вызывать dispatch, не будучи дочерним компонентом. Когда перейдём к полноценной логике — перенесём обработку прямо в InnerGame без этого мостика.

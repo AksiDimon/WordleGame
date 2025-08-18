@@ -4,22 +4,19 @@ import ReactDOM from 'react-dom/client';
 import {
   createBrowserRouter,
   RouterProvider,
-  redirect,
 } from 'react-router-dom';
+
 import App from './App';
-import LandingPage from './routes/LandingPage';
-import GamePage from './routes/GamePage';
-import ProfilePage from './routes/ProfilePage';
-import PlayersPage from './routes/PlayersPage';
-import PlayerStatsPage from './routes/PlayerStatsPage';
-import NotFoundPage from './routes/NotFoundPage';
 import { AuthProvider } from './features/auth/AuthProvider';
 import { RequireAuth } from './features/auth/RequireAuth';
 import { ThemeProvider } from './features/theme/ThemeProvider';
+import GamePage from './routes/GamePage';
+import LandingPage from './routes/LandingPage';
+import NotFoundPage from './routes/NotFoundPage';
+import PlayersPage from './routes/PlayersPage';
+import PlayerStatsPage from './routes/PlayerStatsPage';
+import ProfilePage from './routes/ProfilePage';
 
-const today = new Intl.DateTimeFormat('en-CA', {
-  timeZone: 'Europe/Amsterdam',
-}).format(new Date());
 
 const router = createBrowserRouter([
   {

@@ -1,8 +1,7 @@
-// src/components/SyncBadge.tsx
-
 // для проверки синхронизации с firestore
-import { useEffect, useState } from "react";
 import { doc, onSnapshot } from "firebase/firestore";
+import { useEffect, useState } from "react";
+
 import { db } from "../firebase";
 
 export default function SyncBadge({ uid }: { uid: string }) {

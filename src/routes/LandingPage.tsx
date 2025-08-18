@@ -1,7 +1,8 @@
 import { Link, useNavigate } from 'react-router-dom';
+
 import AuthCard from '../components/AuthCard';
-import { useAuth } from '../features/auth/auth.store';
 import NextPuzzleTimer from '../components/NextPuzzleTimer';
+import { useAuth } from '../features/auth/auth.store';
 
 export default function LandingPage() {
   const { user } = useAuth();
@@ -43,7 +44,7 @@ export default function LandingPage() {
     );
   }
 
-  // гость
+
   return (
     <div className="space-y-6  text-center">
       <h1 className="text-2xl font-bold">Добро пожаловать!</h1>
