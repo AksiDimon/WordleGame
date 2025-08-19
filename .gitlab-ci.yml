@@ -1,16 +1,34 @@
 image: node:20
 
-stages: [deploy]
+stages: [build, deploy]
+
+variables:
+  PUBLIC_PATH: "/$CI_PROJECT_PATH/"
+
+build:
+  stage: build
+  script:
+    - npm ci
+    - npm run build -- --base="$PUBLIC_PATH"
+  artifacts:
+    paths:
+      - dist/
+    expire_in: 1 week
+  only:
+    - master
 
 pages:
   stage: deploy
+  dependencies: [build]
   script:
-    - npm ci
-    - npm run build
     - mkdir -p public
     - cp -r dist/* public/
-    # SPA-fallback, чтобы прямые переходы не давали 404
+    # SPA fallback: все неизвестные пути вернут наш index.html
     - cp public/index.html public/404.html
   artifacts:
-    paths: [public]
-  only: [master, homework]
+    paths:
+      - public
+    expire_in: 1 week
+  only:
+    - master
+
