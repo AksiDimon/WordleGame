@@ -1,11 +1,11 @@
 # Аксенов Дмитрий Алексеевич
 
-
 # App WordleGame
 
-# Firebase Google Auth Mini
 
+# Документация
 Мини-проект на Vite + React + TypeScript + Firebase Web SDK с входом через Google и кнопкой выхода.
+
 
 ## Старт
 
