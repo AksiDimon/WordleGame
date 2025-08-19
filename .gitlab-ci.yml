@@ -1,9 +1,14 @@
 image: node:20
 
-stages: [build, deploy]
+stages: [test, build, deploy]
 
-variables:
-  PUBLIC_PATH: "/$CI_PROJECT_PATH/"
+test:
+  stage: test
+  script:
+    - npm ci
+    - npm run test
+  only:
+    - homework
 
 build:
   stage: build
@@ -31,4 +36,3 @@ pages:
     expire_in: 1 week
   only:
     - homework
-
