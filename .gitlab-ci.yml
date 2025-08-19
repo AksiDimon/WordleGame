@@ -1,0 +1,15 @@
+image: node:20
+stages: [deploy]
+
+deploy_firebase:
+  stage: deploy
+  before_script:
+    - npm ci
+    - npm i -g firebase-tools
+    - echo "$FIREBASE_SERVICE_ACCOUNT_JSON" > sa.json
+    - export GOOGLE_APPLICATION_CREDENTIALS="$CI_PROJECT_DIR/sa.json"
+  script:
+    - npm run build
+    - firebase deploy --only hosting --project "$FIREBASE_PROJECT_ID"
+  only:
+    - main

@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 
-// Мокаем проверку словаря: допустимы только APPLE и GRAPE
+
 vi.mock('../../data/dictionary', () => ({
   isValidWord: (w: string) => ['APPLE', 'GRAPE'].includes(w.toUpperCase()),
 }))

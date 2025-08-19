@@ -2,18 +2,18 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { signInWithPopup } from 'firebase/auth';
 import { vi, describe, it, expect } from 'vitest';
 
-// мок firebase/auth — перехватываем вызов
+// мок firebase/auth 
 vi.mock('firebase/auth', () => ({
   signInWithPopup: vi.fn(),
   signOut: vi.fn(),
 }));
 
-// мок стора авторизации — гость, не грузится
+// мок стора авторизации 
 vi.mock('../features/auth/auth.store', () => ({
   useAuth: () => ({ user: null, loading: false }),
 }));
 
-// мок локального firebase — достаточно заглушек
+// мок локального firebase 
 vi.mock('../firebase', () => ({
   auth: {} ,
   googleProvider: {},
