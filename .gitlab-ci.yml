@@ -9,7 +9,7 @@ build:
   stage: build
   script:
     - npm ci
-    - npm run build -- --base="$PUBLIC_PATH"
+    - npm run build
   artifacts:
     paths:
       - dist/
