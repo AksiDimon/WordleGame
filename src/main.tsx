@@ -18,7 +18,8 @@ import PlayerStatsPage from './routes/PlayerStatsPage';
 import ProfilePage from './routes/ProfilePage';
 
 
-const router = createBrowserRouter([
+const router = createBrowserRouter(
+  [
   {
     element: (
       <ThemeProvider>
@@ -65,7 +66,11 @@ const router = createBrowserRouter([
       { path: '*', element: <NotFoundPage /> },
     ],
   },
-]);
+],
+  {
+    basename: import.meta.env.BASE_URL.replace(/\/$/, ''),
+  }
+);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
