@@ -1,9 +1,14 @@
-import react from "@vitejs/plugin-react";
-import { defineConfig } from "vite";
+import react from '@vitejs/plugin-react';
+import { defineConfig } from 'vite';
 
 export default defineConfig({
   plugins: [react()],
-    server: {
+  test: {
+    environment: 'jsdom',
+    setupFiles: './src/test/setup.ts',
+    css: true,
+  },
+  server: {
     headers: {
       // Разрешаем попапы
       'Cross-Origin-Opener-Policy': 'same-origin-allow-popups',
