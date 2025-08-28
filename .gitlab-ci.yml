@@ -1,0 +1,38 @@
+image: node:20
+
+stages: [test, build, deploy]
+
+test:
+  stage: test
+  script:
+    - npm ci
+    - npm run test
+  only:
+    - homework
+
+build:
+  stage: build
+  script:
+    - npm ci
+    - npm run build
+  artifacts:
+    paths:
+      - dist/
+    expire_in: 1 week
+  only:
+    - homework
+
+pages:
+  stage: deploy
+  dependencies: [build]
+  script:
+    - mkdir -p public
+    - cp -r dist/* public/
+    # SPA fallback: все неизвестные пути вернут наш index.html
+    - cp public/index.html public/404.html
+  artifacts:
+    paths:
+      - public
+    expire_in: 1 week
+  only:
+    - homework

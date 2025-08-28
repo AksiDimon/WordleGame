@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="Cross-Origin-Opener-Policy"
+      content="same-origin-allow-popups"
+    />
+    <meta http-equiv="Cross-Origin-Embedder-Policy" content="unsafe-none" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Firebase Google Auth Mini</title>
+    <script>
+      // Инициализация темы максимально рано (до рендера)
+      (function () {
+        try {
+          const root = document.documentElement;
+          const defaultColorTheme = root.className;
+          const themeStorageValue = localStorage.getItem('theme');
+
+          if (
+            themeStorageValue &&
+            (themeStorageValue === 'dark' || themeStorageValue === 'light')
+          ) {
+            root.className = themeStorageValue;
+          } else {
+            localStorage.setItem('theme', 'dark');
+          }
+
+          if (navigator.userAgent.toLowerCase().includes('firefox')) {
+            root.dataset.browser = 'firefox';
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <script type="module" crossorigin src="/WordleGame/assets/index-Tx3s93Xl.js"></script>
+    <link rel="stylesheet" crossorigin href="/WordleGame/assets/index-DzrusMH0.css">
+  </head>
+  <body style="margin: 0">
+    <div id="root"></div>
+  </body>
+</html>
