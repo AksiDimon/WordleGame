@@ -62,7 +62,8 @@ export type GameStore = {
 };
 
 
-const creator: StateCreator<GameStore, [], [], GameStore> = (set, get) => ({
+
+export const useGameStore = create<GameStore>((set, get) => ({
   day: "",
   answer: "",
   rows: [],
@@ -115,13 +116,13 @@ const creator: StateCreator<GameStore, [], [], GameStore> = (set, get) => ({
       set((s) => ({ invalidTick: s.invalidTick + 1, invalidReason: "length" }));
       return;
     }
-
+    
     if (!isValidWord(guess)) {
+      
       set((s) => ({ invalidTick: s.invalidTick + 1, invalidReason: "notfound" }));
       return;
     }
-
-
+    
     const kb = { ...keyboard };
     for (let i = 0; i < WORD_LENGTH; i++) {
       const key = guess[i];
@@ -148,7 +149,4 @@ const creator: StateCreator<GameStore, [], [], GameStore> = (set, get) => ({
     if (!guess) return null;
     return scoreGuess(answer, guess);
   },
-});
-
-
-export const useGameStore = create<GameStore>(creator);
+}));

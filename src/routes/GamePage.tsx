@@ -21,6 +21,7 @@ export default function GamePage() {
     };
   }, [reset]);
 
+
   return (
     <div className="max-w-[600px] mx-auto py-6 space-y-6 relative">
       <button

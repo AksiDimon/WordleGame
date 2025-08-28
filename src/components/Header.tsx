@@ -14,7 +14,6 @@ export function Header() {
   const [open, setOpen] = useState(false);
   const loc = useLocation();
 
-
   useEffect(() => setOpen(false), [loc]);
 
   const onKey = useCallback((e: KeyboardEvent) => {
@@ -177,6 +176,17 @@ export function Header() {
             >
               Профиль
             </NavLink>
+            {user && (
+              <NavLink
+                to="/metrics"
+                onClick={() => setOpen(false)}
+                className={({ isActive }) =>
+                  `btn btn-ghost ${isActive ? 'ring-2 ring-[var(--color-accent)] ring-offset-0' : ''}`
+                }
+              >
+                Метрики (все)
+              </NavLink>
+            )}
 
             <div className="py-2">
               <ThemeToggle />
@@ -187,14 +197,14 @@ export function Header() {
                 <LogoutButton
                   onClick={() => {
                     setOpen(false);
-                   void signOut(auth);
+                    void signOut(auth);
                   }}
                 />
               ) : (
                 <LoginButton
                   onClick={() => {
                     setOpen(false);
-                   void signInWithPopup(auth, googleProvider);
+                    void signInWithPopup(auth, googleProvider);
                   }}
                 />
               ))}
@@ -204,4 +214,3 @@ export function Header() {
     </header>
   );
 }
-
